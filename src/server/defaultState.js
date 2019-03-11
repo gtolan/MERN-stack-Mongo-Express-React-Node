@@ -41,13 +41,13 @@ export const defaultState = {
     },
     {
       name: "Task test three",
-      id: "T2",
+      id: "T3",
       group: "G1",
       isComplete: false
     },
     {
       name: "Task tests Four",
-      id: "T2",
+      id: "T4",
       group: "G1",
       isComplete: false
     }
