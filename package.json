@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack",
-    "dev": "webpack-dev-server --open"
+    "start-dev": "concurrently \"npm run serve\" \"npm run dev\"",
+    "dev": "webpack-dev-server --open",
+    "initDB": "babel-node src/server/init-db",
+    "serve": "babel-node src/server/server",
+    "test-serve": "babel-node src/server/server.spec"
   },
   "author": "",
   "license": "ISC",
@@ -17,11 +21,17 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "history": "^4.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

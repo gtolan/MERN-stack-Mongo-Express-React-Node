@@ -4,7 +4,8 @@ import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
 const sagaMiddleware = createSagaMiddleware();
-import * as sagas from "./sagas.mock";
+// import * as sagas from "./sagas.mock";
+import * as sagas from "./sagas";
 import * as mutations from "./mutations";
 
 export const store = createStore(
@@ -23,6 +24,24 @@ export const store = createStore(
               isComplete: false
             }
           ];
+        case mutations.SET_TASK_COMPLETE:
+          return tasks.map(task => {
+            return task.id === action.taskId
+              ? { ...task, isComplete: action.isComplete }
+              : task;
+          });
+        case mutations.SET_TASK_NAME:
+          return tasks.map(task => {
+            return task.id === action.taskId
+              ? { ...task, name: action.name }
+              : task;
+          });
+        case mutations.SET_TASK_GROUP:
+          return tasks.map(task => {
+            return task.id === action.taskId
+              ? { ...task, group: action.group }
+              : task;
+          });
       }
       return tasks;
     },
