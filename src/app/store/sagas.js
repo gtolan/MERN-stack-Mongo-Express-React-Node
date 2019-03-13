@@ -1,6 +1,7 @@
-import { take, put, select } from "redux-saga/effects";
+import { take, put, select, takeLatest } from "redux-saga/effects";
 import uuid from "uuid";
 import axios from "axios";
+import history from "./history";
 
 import * as mutations from "./mutations";
 
@@ -21,6 +22,52 @@ export function* taskCreationSaga() {
         name: "New Task"
       }
     });
-    console.info("got response", res);
+  }
+}
+
+export function* taskModificationSaga() {
+  while (true) {
+    const task = yield take([
+      mutations.SET_TASK_GROUP,
+      mutations.SET_TASK_NAME,
+      mutations.SET_TASK_COMPLETE
+    ]);
+    axios.post(url + "/task/update", {
+      task: {
+        id: task.taskId,
+        group: task.groupId,
+        name: task.name,
+        isComplete: task.isComplete
+      }
+    });
+  }
+}
+
+export function* userAuthenticationSaga() {
+  while (true) {
+    const { username, password } = yield take(
+      mutations.REQUEST_AUTHENTICATE_USER
+    );
+    try {
+      const { data } = yield axios.post(url + "/authenticate", {
+        username,
+        password
+      });
+      if (!data) {
+        throw new Error();
+      }
+      yield put(mutations.setState(data.state));
+      yield put(
+        mutations.processingAuthenticationUser(mutations.AUTHENTICATED)
+      );
+      history.push("/dashboard");
+
+      console.log("authenticated!", data);
+    } catch (e) {
+      console.log("cant authenticate");
+      yield put(
+        mutations.processingAuthenticationUser(mutations.NOT_AUTHENTICATED)
+      );
+    }
   }
 }

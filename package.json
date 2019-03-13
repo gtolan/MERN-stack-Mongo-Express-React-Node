@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack",
+    "start": "npm run serve",
     "start-dev": "concurrently \"npm run serve\" \"npm run dev\"",
     "dev": "webpack-dev-server --open",
     "initDB": "babel-node src/server/init-db",
@@ -33,9 +34,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "history": "^4.7.2",
+    "md5": "^2.2.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
