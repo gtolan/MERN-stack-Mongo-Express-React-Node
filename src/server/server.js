@@ -6,7 +6,7 @@ import "./init-db";
 import { authenticationRoute } from "./authenticate";
 import path from "path";
 
-let port = 7777;
+let port = process.ene.PORT || 7777;
 let app = express();
 
 app.listen(port, console.log("server listening on", port));
